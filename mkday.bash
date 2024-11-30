@@ -16,7 +16,7 @@ printf -v day "%02d" $1
 #cp -p solve.py $day/part1.py
 #cp -p solve.py $day/part2.py
 
-#./render_md.py $day
+./render_md.py $day
 
 FILE="input/${day}/input.txt"
 [ ! -d $(dirname $FILE) ] && mkdir -p $(dirname $FILE)
@@ -24,7 +24,7 @@ FILE="input/${day}/input.txt"
 if [ ! -s ./${FILE} ]
 then
    echo "Fetching $FILE"
-   wget --no-cookies --header "Cookie: session=$(<./.token)" https://adventofcode.com/2024/day/$1/input -O ${FILE}
+   wget --no-cookies --header "Cookie: session=$(<./.token)" https://adventofcode.com/$(date +'%Y')/day/$1/input -O ${FILE}
 else
    echo "$FILE already exists with data"
 fi
