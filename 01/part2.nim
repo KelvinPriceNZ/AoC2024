@@ -1,11 +1,12 @@
 import strutils
 import std/strformat
 import sequtils
-
-var sum: int = 0
+import std/os
 
 var
+  sum: int = 0
   left, right: seq[int]
+
 
 for l in "../input/01/input.txt".lines:
   let words = l.splitWhitespace

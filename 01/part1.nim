@@ -2,10 +2,10 @@ import strutils
 import std/strformat
 import std/algorithm
 
-var sum: int = 0
-
 var
+  sum: int = 0
   left, right: seq[int]
+
 
 for l in "../input/01/input.txt".lines:
   let words = l.splitWhitespace
