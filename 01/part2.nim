@@ -10,7 +10,7 @@ var
 for l in "../input/01/input.txt".lines:
   let words = l.split(' ')
   var num1 = words[0].parseInt
-  var num2 = words[3].parseInt
+  var num2 = words[^1].parseInt
   left.add(num1)
   right.add(num2)
 
