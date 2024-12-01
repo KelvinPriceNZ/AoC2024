@@ -6,7 +6,16 @@ cd $BASEDIR
 if [[ -z $1 ]]
 then
    echo "No day number provided"
-   exit 1
+
+   if [[ $(date +'%b') == "Dec" ]] && [[ $(date +'%d') < 26 ]]
+   then
+      # It's Dec 1st to 25th, during AoC, maybe you just want today
+      echo "Enter to accept $(date +'%_d'), ctrl-C to abort"
+      read reply
+      set $(date +'%_d')
+   else
+      exit 1
+   fi
 fi
 
 printf -v day "%02d" $1
@@ -25,6 +34,11 @@ if [ ! -s ./${FILE} ]
 then
    echo "Fetching $FILE"
    wget --no-cookies --header "Cookie: session=$(<./.token)" https://adventofcode.com/$(date +'%Y')/day/$1/input -O ${FILE}
+   if [[ $? != 0 ]]
+   then
+      echo "wget error: $? $!"
+      exit 2
+   fi
 else
    echo "$FILE already exists with data"
 fi
