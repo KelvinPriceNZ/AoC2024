@@ -1,7 +1,6 @@
 import strutils
 import std/strformat
 import sequtils
-import std/os
 
 var
   sum: int = 0
