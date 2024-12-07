@@ -7,13 +7,7 @@ var
 
 
 func ok(s: seq): bool =
-  var asc = s
-  var dsc = s
-
-  asc.sort
-  dsc.sort(order=SortOrder.Descending)
-
-  if s == asc or s == dsc:
+  if s == s.sorted or s == s.sorted.reversed:
     var
       f: bool = true
 
