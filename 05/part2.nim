@@ -2,8 +2,7 @@
 import strutils
 import std/strformat
 import nre
-import sequtils
-#import std/algorithm
+import std/algorithm
 
 var
   sum: int = 0
@@ -18,6 +17,13 @@ proc check(r: seq[(int,int)], o: seq[int]): bool =
 
   result = true
 
+proc ord_cmp(a, b: int): int =
+  if (a,b) in rules:
+    return -1
+  if (b,a) in rules:
+    return 1
+  return 0
+
 
 for l in "../input/05/input.txt".lines:
   if l.contains(re"\|"):
@@ -31,24 +37,9 @@ for l in "../input/05/input.txt".lines:
     for n in l.split(","):
       order.add(parseInt(n))
 
-    if not check(rules, order):
-      var neworder: seq[int]
+    if order != order.sorted(ord_cmp):
+      order.sort(ord_cmp)
 
-      neworder.add(order[0])
-
-      for i in 1..order.high:
-        let num = order[i]
-
-        var temporder: seq[int]
-
-        for p in 0..neworder.high + 1:
-          temporder = neworder
-          temporder.insert(@[num], p)
-          if check(rules, temporder):
-            break
-
-        neworder = temporder
-
-      sum += neworder[order.len div 2]
+      sum += order[order.len div 2]
 
 echo &"{sum}"
