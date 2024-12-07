@@ -24,17 +24,7 @@ for r in 1..<height - 1:
       let bl = grid[r+1][c-1]
       let br = grid[r+1][c+1]
 
-      if tl == 'M' and br == 'S':
-        if tr == 'M' and bl == 'S':
-          sum += 1
-        if tr == 'S' and bl == 'M':
-          sum += 1
-
-      if tl == 'S' and br == 'M':
-        if tr == 'M' and bl == 'S':
-          sum += 1
-        if tr == 'S' and bl == 'M':
-          sum += 1
-
+      if tl & br in ["SM","MS"] and tr & bl in ["SM","MS"]:
+        sum += 1
 
 echo &"{sum}"
