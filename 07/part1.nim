@@ -6,11 +6,10 @@ var
   sum: int = 0
 
 
-proc calc(soln: int, answer: var int, terms: seq[int], candidates: var seq[int], depth: int): seq[int] =
+proc calc(soln: int, answer: var int, terms: seq[int], candidates: var seq[int], depth: int): int {.discardable.} =
   if depth == terms.high:
     if answer == soln:
       candidates.add(answer)
-    return candidates
   else:
     for op in ['+','*']:
       var curr: int = answer
@@ -23,9 +22,7 @@ proc calc(soln: int, answer: var int, terms: seq[int], candidates: var seq[int],
           discard
 
       if answer <= soln:
-        discard calc(soln, answer, terms, candidates, depth + 1)
-      else:
-        discard calc(soln, answer, terms, candidates, terms.high)
+        calc(soln, answer, terms, candidates, depth + 1)
 
       answer = curr
 
@@ -39,7 +36,7 @@ for l in "../input/07/input.txt".lines:
 
   var choices: seq[int]
 
-  discard calc(solution, terms[0], terms, choices, 0)
+  calc(solution, terms[0], terms, choices, 0)
   for ans in choices:
     if ans == solution:
       sum += solution
