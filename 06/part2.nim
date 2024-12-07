@@ -71,7 +71,11 @@ Then check if it created a loop by checking if
 we hit the same obstacle from the same direction
 ]#
 for step in path:
+  if step == guard:
+    continue
+
   grid = original_grid
+
   var r, c: int
   (r,c) = (step[0],step[1])
   let cell = grid[r][c]
