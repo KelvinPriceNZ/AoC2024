@@ -51,12 +51,20 @@ for r in 0..<height:
       antennas[cell].add((r,c))
 
 for k, v in antennas:
+  # For every pair of matched antennas
   for i, c1 in v[0..^2].pairs:
     for c2 in v[i+1..^1]:
       antinodes.incl(c1)
       antinodes.incl(c2)
 
       var dir: coords = c1 - c2
+
+      #[
+        While the dir values are even we can
+        continuously halve them to get the
+        the positions half-way between them
+        and also extend in each direction
+      ]#
 
       while dir[0] %% 2 == 0 and dir[1] %% 2 == 0:
         dir[0] = dir[0] div 2
@@ -65,6 +73,7 @@ for k, v in antennas:
       var a1 = c1 + dir
       var a2 = c2 - dir
 
+      # Extend in each direction
       while inbounds(a1, height, width):
         antinodes.incl(a1)
         a1 += dir

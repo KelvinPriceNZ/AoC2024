@@ -43,6 +43,7 @@ for r in 0..<height:
       antennas[cell].add((r,c))
 
 for k, v in antennas:
+  # For every pair of matched antennas
   for i, c1 in v[0..^2].pairs:
     for c2 in v[i+1..^1]:
       let dir: coords = c1 - c2
