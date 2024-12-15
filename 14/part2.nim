@@ -1,6 +1,7 @@
 import std/strformat
 import std/strscans
 import std/terminal
+import math
 
 type
   coords = (int,int)
@@ -19,15 +20,17 @@ var grid: seq[seq[char]]
 func `+`(a,b: coords): coords =
   return (a[0]+b[0], a[1]+b[1])
 
-method transport(self: var robot): int {.discardable,base.} =
-  if self.pos[0] < 0: self.pos[0] = self.pos[0] + height
-  if self.pos[0] >= height: self.pos[0] = self.pos[0] - height
-  if self.pos[1] < 0: self.pos[1] = self.pos[1] + width
-  if self.pos[1] >= width: self.pos[1] = self.pos[1] - width
+func `*`(a,b: coords): coords =
+  return (a[0]*b[0], a[1]*b[1])
 
-method step(self: var robot): int {.discardable,base.} =
-  self.pos = self.pos + self.vel
-  self.transport()
+method step(self: var robot, steps: int): int {.discardable,base.} =
+  self.pos = self.pos + (self.vel * (steps,steps))
+
+  self.pos[0] = self.pos[0].mod(height)
+  self.pos[1] = self.pos[1].mod(width)
+
+  if self.pos[0] < 0: self.pos[0] += height
+  if self.pos[1] < 0: self.pos[1] += width
 
 
 var px, py, vx, vy: int
@@ -43,11 +46,10 @@ for r in 0..<height:
   for c in 0..<width:
     grid[^1].add(' ')
 
-var s: int = 0
-while true:
-  s += 1
+# lcm(height,width) is the cycle length
+for s in 1..lcm(height,width):
   for r in 0..robots.high:
-    robots[r].step()
+    robots[r].step(1)
 
   # 63 and 82 learned from observing 1s increments and noticing a pattern
   if s %% 103 == 63 and s %% 101 == 82:
