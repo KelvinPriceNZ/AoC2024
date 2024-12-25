@@ -23,8 +23,8 @@ func `*`(a,b: coords): coords =
 method step(self: var robot, steps: int): int {.discardable,base.} =
   self.pos = self.pos + (self.vel * (steps,steps))
 
-  self.pos[0] = self.pos[0].mod(height)
-  self.pos[1] = self.pos[1].mod(width)
+  self.pos[0] = self.pos[0] mod height
+  self.pos[1] = self.pos[1] mod width
 
   if self.pos[0] < 0: self.pos[0] += height
   if self.pos[1] < 0: self.pos[1] += width

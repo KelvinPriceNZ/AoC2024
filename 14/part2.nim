@@ -1,6 +1,6 @@
 import std/strformat
 import std/strscans
-import std/terminal
+#import std/terminal
 import math
 
 type
@@ -9,8 +9,10 @@ type
     pos: coords
     vel: coords
 
+#[
 var
   sum: int = 0
+]#
 
 let height = 103
 let width = 101
@@ -26,8 +28,8 @@ func `*`(a,b: coords): coords =
 method step(self: var robot, steps: int): int {.discardable,base.} =
   self.pos = self.pos + (self.vel * (steps,steps))
 
-  self.pos[0] = self.pos[0].mod(height)
-  self.pos[1] = self.pos[1].mod(width)
+  self.pos[0] = self.pos[0] mod height
+  self.pos[1] = self.pos[1] mod width
 
   if self.pos[0] < 0: self.pos[0] += height
   if self.pos[1] < 0: self.pos[1] += width
@@ -65,7 +67,7 @@ for s in 1..lcm(height,width):
         write(stdout, grid[r][c])
       write(stdout, "\n")
     flushFile(stdout)
-    echo &"{s:15} seconds"
+    echo &"{s:6} seconds"
     #[
     # Wait for a key press every loop
     var k: char = getch()
@@ -74,6 +76,7 @@ for s in 1..lcm(height,width):
     ]#
     break
 
+#[
 let hc = height div 2
 let wc = width div 2
 
@@ -94,3 +97,4 @@ for robot in robots:
 sum = tl * tr * bl * br
 
 echo &"{sum}"
+]#
